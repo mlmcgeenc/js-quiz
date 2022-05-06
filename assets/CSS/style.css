@@ -1,0 +1,14 @@
+.button {
+    color: rgb(255, 255, 255);
+    background-color: cornflowerblue;
+    font-size: 2rem;
+    padding: 1rem;
+    border-radius: .5rem;
+    margin: 1rem;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
