@@ -9,7 +9,6 @@ formEl = document.getElementById("high-score-entry");
 var initialTime = 0;
 var currentQuestion = 0;
 var timeLeft = 0;
-var penalty = false;
 
 var questions = [
 	{
@@ -122,25 +121,40 @@ var handleAnswer = function (event) {
 };
 
 var finalScore = function () {
-	if ( timeLeft > 0) {
-		return timeLeft
+	if (timeLeft > 0) {
+		return timeLeft;
 	} else {
-		return 0
+		return 0;
 	}
-}
+};
 
 var endGame = function () {
 	titleEl.textContent = "All done!";
 	timeLeftEl.textContent = finalScore();
 	contentEl.textContent = "Your final score is " + finalScore();
 	mainEl.removeChild(answerResultEl);
-	formEl.style.display= "inline";
+	formEl.style.display = "inline";
 };
 
-var handleHighScoreInput = function () {
-
-}
+var handleHighScoreInput = function (event) {
+	console.log(event.target);
+	if (event.target.matches("#high-score-entry")) {
+		var newScore = {
+			initials: document.getElementById("player-initials").value,
+			score: finalScore(),
+		};
+	}
+	if (localStorage.getItem("highScores")) {
+		highScores = JSON.parse(localStorage.getItem("highScores"));
+		highScores.push(newScore);
+		localStorage.setItem("highScores", JSON.stringify(highScores));
+	} else {
+		var highScores = [];
+		highScores.push(newScore);
+		localStorage.setItem("highScores", JSON.stringify(highScores));
+	}
+};
 
 startButtonEl.addEventListener("click", handleQuizStart);
 contentEl.addEventListener("click", handleAnswer);
-formEl.addEventListener("click", handleHighScoreInput)
+formEl.addEventListener("submit", handleHighScoreInput);
