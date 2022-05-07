@@ -6,6 +6,7 @@ introEl = document.getElementById("introduction");
 startButtonEl = document.getElementById("start-button");
 answerResultEl = document.getElementById("answer-result");
 formEl = document.getElementById("high-score-entry");
+highScoresListEl = document.getElementById("scores-list");
 var initialTime = 0;
 var currentQuestion = 0;
 var timeLeft = 0;
@@ -45,6 +46,7 @@ var questions = [
 	},
 ];
 
+//  ? Is this really the best palce for this?
 timeLeftEl.textContent = initialTime;
 
 var handleQuizStart = function () {
@@ -137,7 +139,6 @@ var endGame = function () {
 };
 
 var handleHighScoreInput = function (event) {
-	console.log(event.target);
 	if (event.target.matches("#high-score-entry")) {
 		var newScore = {
 			initials: document.getElementById("player-initials").value,

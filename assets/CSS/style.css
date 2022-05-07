@@ -16,3 +16,11 @@ ul {
 form {
     display: none;
 }
+
+.score-card-entry {
+    background-color: cornflowerblue;
+    color: white;
+    margin: .5rem;
+    padding: .5rem;
+
+}
