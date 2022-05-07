@@ -4,47 +4,43 @@ titleEl = document.getElementById("title");
 contentEl = document.getElementById("content");
 introEl = document.getElementById("introduction");
 startButtonEl = document.getElementById("start-button");
+answerResultEl = document.getElementById("answer-result");
 var initialTime = 0;
 var currentQuestion = 0;
+var timeLeft = 0;
+var penalty = false;
 
 var questions = [
 	{
 		questionText: "Commonly used data types do NOT include:",
 		answersList: ["strings", "booleans", "alerts", "numbers"],
-		correctAnswerIndex: 3,
+		correctAnswerIndex: 2,
 	},
 	{
 		questionText: "The condition in an if/else statement is enclosed with _____.",
-		answer1: "quotes",
-		answer2: "curly brackets",
-		answer3: "parenthesis",
-		answer4: "square brackets",
+		answersList: ["quotes", "curly brackets", "parenthesis", "square brackets"],
 		correctAnswerIndex: 2,
 	},
 	{
 		questionText: "Arrays in JavaScript can be used to store _____.",
-		answer1: "numbers and strings",
-		answer2: "other arrays",
-		answer3: "booleans",
-		answer4: "all of the above",
+		answersList: [
+			"numbers and strings",
+			"other arrays",
+			"booleans",
+			"all of the above",
+		],
 		correctAnswerIndex: 3,
 	},
 	{
 		questionText:
 			"String values must be enclosed within ___ when being assigned to variables.",
-		answer1: "commas",
-		answer2: "curly brackets",
-		answer3: "quotes",
-		answer4: "parenthesis",
+		answersList: ["commas", "curly brackets", "quotes", "parenthesis"],
 		correctAnswerIndex: 2,
 	},
 	{
 		questionText:
 			"A very useful tool used during development and debugging for printing content to the debugger is:",
-		answer1: "JavaScript",
-		answer2: "terminal/bash",
-		answer3: "for loops",
-		answer4: "console.log",
+		answersList: ["JavaScript", "terminal/bash", "for loops", "console.log"],
 		correctAnswerIndex: 3,
 	},
 ];
@@ -63,11 +59,11 @@ var removeIntroContent = function () {
 };
 
 var startTimer = function () {
-	var timeLeft = 60;
+	timeLeft = 30;
 	var timeInterval = setInterval(function () {
-		if (timeLeft > 0) {
+		timeLeft--;
+		if (timeLeft >= 1) {
 			timeLeftEl.textContent = timeLeft;
-			timeLeft--;
 		} else {
 			timeLeftEl.textContent = "GAME OVER";
 			clearInterval(timeInterval);
@@ -75,26 +71,55 @@ var startTimer = function () {
 	}, 1000);
 };
 
+var addPenalty = function () {
+		timeLeft = timeLeft - 10;
+}
+
 var getNextQuestion = function () {
-	titleEl.textContent = questions[currentQuestion].questionText;
-	contentEl.appendChild(buildQuestionList());
+	if (currentQuestion < questions.length) {
+		titleEl.textContent = questions[currentQuestion].questionText;
+		contentEl.appendChild(buildQuestionList());
+	} else {
+		console.log("GAME OVER!");
+	}
 };
 
 var buildQuestionList = function () {
-	var answeresContainer = document.createElement("ul");
-	answeresContainer.className = "answer-container";
+	var answeresContainerEl = document.createElement("ul");
+	answeresContainerEl.className = "answer-container";
+	answeresContainerEl.id = "answer-container";
 
 	for (i = 0; i < 4; i++) {
 		var answerItem = document.createElement("li");
 		answerItem.className = "button";
-		console.log(questions[currentQuestion].answersList[i]);
 		answerItem.textContent = questions[currentQuestion].answersList[i];
 		answerItem.setAttribute("data-answer-index", i);
 
-		answeresContainer.appendChild(answerItem);
+		answeresContainerEl.appendChild(answerItem);
 	}
-	currentQuestion++;
-	return answeresContainer;
+	return answeresContainerEl;
+};
+
+var handleAnswer = function (event) {
+	oldAnsweres = document.getElementById("answer-container");
+	if (
+		parseInt(event.target.dataset.answerIndex) ===
+		questions[currentQuestion].correctAnswerIndex
+	) {
+		console.log("GOT IT RIGHT");
+		answerResultEl.textContent = "CORRECT!";
+		contentEl.removeChild(oldAnsweres);
+		currentQuestion++;
+		getNextQuestion();
+	} else {
+		console.log("GOT IT WRONG");
+		answerResultEl.textContent="WRONG!"
+		contentEl.removeChild(oldAnsweres);
+		addPenalty();
+		currentQuestion++;
+		getNextQuestion();
+	}
 };
 
 startButtonEl.addEventListener("click", handleQuizStart);
+contentEl.addEventListener("click", handleAnswer);
