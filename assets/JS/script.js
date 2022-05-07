@@ -5,6 +5,7 @@ contentEl = document.getElementById("content");
 introEl = document.getElementById("introduction");
 startButtonEl = document.getElementById("start-button");
 answerResultEl = document.getElementById("answer-result");
+formEl = document.getElementById("high-score-entry");
 var initialTime = 0;
 var currentQuestion = 0;
 var timeLeft = 0;
@@ -61,26 +62,26 @@ var removeIntroContent = function () {
 var startTimer = function () {
 	timeLeft = 30;
 	var timeInterval = setInterval(function () {
-		timeLeft--;
-		if (timeLeft >= 1) {
+		if (timeLeft >= 1 && currentQuestion < questions.length) {
+			timeLeft--;
 			timeLeftEl.textContent = timeLeft;
 		} else {
-			timeLeftEl.textContent = "GAME OVER";
 			clearInterval(timeInterval);
+			endGame();
 		}
 	}, 1000);
 };
 
 var addPenalty = function () {
-		timeLeft = timeLeft - 10;
-}
+	timeLeft = timeLeft - 10;
+};
 
 var getNextQuestion = function () {
 	if (currentQuestion < questions.length) {
 		titleEl.textContent = questions[currentQuestion].questionText;
 		contentEl.appendChild(buildQuestionList());
 	} else {
-		console.log("GAME OVER!");
+		endGame();
 	}
 };
 
@@ -100,20 +101,19 @@ var buildQuestionList = function () {
 	return answeresContainerEl;
 };
 
+// TODO Refactor to remove duplicated lines
 var handleAnswer = function (event) {
 	oldAnsweres = document.getElementById("answer-container");
 	if (
 		parseInt(event.target.dataset.answerIndex) ===
 		questions[currentQuestion].correctAnswerIndex
 	) {
-		console.log("GOT IT RIGHT");
 		answerResultEl.textContent = "CORRECT!";
 		contentEl.removeChild(oldAnsweres);
 		currentQuestion++;
 		getNextQuestion();
 	} else {
-		console.log("GOT IT WRONG");
-		answerResultEl.textContent="WRONG!"
+		answerResultEl.textContent = "WRONG!";
 		contentEl.removeChild(oldAnsweres);
 		addPenalty();
 		currentQuestion++;
@@ -121,5 +121,26 @@ var handleAnswer = function (event) {
 	}
 };
 
+var finalScore = function () {
+	if ( timeLeft > 0) {
+		return timeLeft
+	} else {
+		return 0
+	}
+}
+
+var endGame = function () {
+	titleEl.textContent = "All done!";
+	timeLeftEl.textContent = finalScore();
+	contentEl.textContent = "Your final score is " + finalScore();
+	mainEl.removeChild(answerResultEl);
+	formEl.style.display= "inline";
+};
+
+var handleHighScoreInput = function () {
+
+}
+
 startButtonEl.addEventListener("click", handleQuizStart);
 contentEl.addEventListener("click", handleAnswer);
+formEl.addEventListener("click", handleHighScoreInput)
