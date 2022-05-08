@@ -21,20 +21,18 @@
 					score/time by ten seconds!
 				</p>
 			</div>
-			<button id="start-button">Start Quiz</button>
+			<button class="button" id="start-button">Start Quiz</button>
 			<h2 id="answer-result"></h2>
-			<!-- <form action="./high-scores.html" method="post" id="high-score-entry"> -->
-			<form id="high-score-entry">
+			<form method="POST" action="./high-scores.html" id="high-score-entry">
 				<p>Enter initials:</p>
 				<input id="player-initials" type="text" />
-				<a
+				<button
 					class="button"
 					id="submit-button"
-					href="./high-scores.html"
 					type="submit"
 				>
-				Submit
-				</a>
+					Submit
+			</button>
 			</form>
 		</main>
 		<script src="./assets/JS/script.js"></script>

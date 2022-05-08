@@ -1,10 +1,66 @@
-.button {
-    color: rgb(255, 255, 255);
-    background-color: cornflowerblue;
+:root {
+    --background-color: white;
+    --highlight-color: #a42ade;
+    --prmary-color: #280e62;
+    --secondary-color: #8c8c8c;
+    --teriary-color: ;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+form {
+    display: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+header {
+    display: flex;
+    font-size: 1.5rem;
+    justify-content: space-between;
+    padding: 1.5rem 1rem;
+}
+
+input {
+    height: 3rem;
     font-size: 2rem;
-    padding: 1rem;
-    border-radius: .5rem;
-    margin: 1rem;
+    padding: .5rem;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+}
+
+header a {
+    color: var(--highlight-color);
+    text-decoration: none;
+}
+
+main {
+    margin: 3rem auto 0 auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 960px;
+}
+
+p {
+    font-size: 2rem;
 }
 
 ul {
@@ -13,14 +69,70 @@ ul {
     padding: 0;
 }
 
-form {
+#answer-result {
+    color: var(--secondary-color);
+    margin: 1.5rem;
+    border-top: solid 1px var(--secondary-color);
+    width: 100%;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 3rem;
     display: none;
 }
 
-.score-card-entry {
-    background-color: cornflowerblue;
-    color: white;
-    margin: .5rem;
-    padding: .5rem;
-
+#content {
+    width: 100%;
+    display: flex;
 }
+
+#title {
+    width: 100%;
+    text-align: center;
+}
+
+#introduction {
+    text-align: center;
+}
+
+#scores-list {
+    width: 100%;
+}
+
+#start-button {
+    margin: 1.5rem auto;
+    padding: 1rem 1.5rem;
+}
+
+#submit-button {
+    margin: 0;
+    padding: .5rem 1.5rem;
+}
+
+.score-card-entry {
+    background-color: #d0c8e5;
+    color: black;
+    font-size: 2rem;
+    margin: .5rem 0;
+    padding: .5rem;
+}
+
+.button {
+    background-color: var(--prmary-color);
+    border-radius: .75rem;
+    border: none;
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    margin: 1rem 1rem 1rem 0;
+    padding: 1rem 1.5rem;
+}
+
+.button:hover {
+    background-color: var(--highlight-color);
+}
+
+
+@media screen and (min-width: 714px) {}
+
+@media screen and (min-width: 959px) {}
+
+@media screen and (min-width: 1439px) {}

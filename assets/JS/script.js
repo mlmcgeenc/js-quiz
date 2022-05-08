@@ -4,6 +4,7 @@ titleEl = document.getElementById("title");
 contentEl = document.getElementById("content");
 introEl = document.getElementById("introduction");
 startButtonEl = document.getElementById("start-button");
+answerChoiceEl = document.querySelectorAll(".button");
 answerResultEl = document.getElementById("answer-result");
 formEl = document.getElementById("high-score-entry");
 highScoresListEl = document.getElementById("scores-list");
@@ -50,6 +51,7 @@ var questions = [
 timeLeftEl.textContent = initialTime;
 
 var handleQuizStart = function () {
+	titleEl.setAttribute("style", "text-align: left;")
 	removeIntroContent();
 	startTimer();
 	getNextQuestion();
@@ -61,7 +63,7 @@ var removeIntroContent = function () {
 };
 
 var startTimer = function () {
-	timeLeft = 30;
+	timeLeft = 75;
 	var timeInterval = setInterval(function () {
 		if (timeLeft >= 1 && currentQuestion < questions.length) {
 			timeLeft--;
@@ -94,7 +96,8 @@ var buildQuestionList = function () {
 	for (i = 0; i < 4; i++) {
 		var answerItem = document.createElement("li");
 		answerItem.className = "button";
-		answerItem.textContent = questions[currentQuestion].answersList[i];
+		answerItem.textContent =
+			[i + 1] + ". " + questions[currentQuestion].answersList[i];
 		answerItem.setAttribute("data-answer-index", i);
 
 		answeresContainerEl.appendChild(answerItem);
@@ -109,12 +112,14 @@ var handleAnswer = function (event) {
 		parseInt(event.target.dataset.answerIndex) ===
 		questions[currentQuestion].correctAnswerIndex
 	) {
-		answerResultEl.textContent = "CORRECT!";
+		answerResultEl.setAttribute("style", "display: inline;");
+		answerResultEl.textContent = "Correct!";
 		contentEl.removeChild(oldAnsweres);
 		currentQuestion++;
 		getNextQuestion();
 	} else {
-		answerResultEl.textContent = "WRONG!";
+		answerResultEl.setAttribute("style", "display: inline;");
+		answerResultEl.textContent = "Wrong!";
 		contentEl.removeChild(oldAnsweres);
 		addPenalty();
 		currentQuestion++;
@@ -133,9 +138,9 @@ var finalScore = function () {
 var endGame = function () {
 	titleEl.textContent = "All done!";
 	timeLeftEl.textContent = finalScore();
-	contentEl.textContent = "Your final score is " + finalScore();
+	contentEl.innerHTML = "<p>Your final score is " + finalScore() + " </p>";
 	mainEl.removeChild(answerResultEl);
-	formEl.style.display = "inline";
+	formEl.style.display = "flex";
 };
 
 var handleHighScoreInput = function (event) {
