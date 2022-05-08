@@ -51,7 +51,7 @@ var questions = [
 timeLeftEl.textContent = initialTime;
 
 var handleQuizStart = function () {
-	titleEl.setAttribute("style", "text-align: left;")
+	titleEl.setAttribute("style", "text-align: left;");
 	removeIntroContent();
 	startTimer();
 	getNextQuestion();
@@ -144,6 +144,7 @@ var endGame = function () {
 };
 
 var handleHighScoreInput = function (event) {
+	event.preventDefault()
 	if (event.target.matches("#high-score-entry")) {
 		var newScore = {
 			initials: document.getElementById("player-initials").value,
@@ -159,6 +160,7 @@ var handleHighScoreInput = function (event) {
 		highScores.push(newScore);
 		localStorage.setItem("highScores", JSON.stringify(highScores));
 	}
+	window.location.href="./high-scores.html";
 };
 
 startButtonEl.addEventListener("click", handleQuizStart);
