@@ -25,29 +25,21 @@ var questions = [
 	},
 	{
 		questionText: "Arrays in JavaScript can be used to store _____.",
-		answersList: [
-			"numbers and strings",
-			"other arrays",
-			"booleans",
-			"all of the above",
-		],
+		answersList: ["numbers and strings", "other arrays", "booleans", "all of the above"],
 		correctAnswerIndex: 3,
 	},
 	{
-		questionText:
-			"String values must be enclosed within ___ when being assigned to variables.",
+		questionText: "String values must be enclosed within ___ when being assigned to variables.",
 		answersList: ["commas", "curly brackets", "quotes", "parenthesis"],
 		correctAnswerIndex: 2,
 	},
 	{
-		questionText:
-			"A very useful tool used during development and debugging for printing content to the debugger is:",
+		questionText: "A very useful tool used during development and debugging for printing content to the debugger is:",
 		answersList: ["JavaScript", "terminal/bash", "for loops", "console.log"],
 		correctAnswerIndex: 3,
 	},
 ];
 
-//  ? Is this really the best palce for this?
 timeLeftEl.textContent = initialTime;
 
 var handleQuizStart = function () {
@@ -63,7 +55,7 @@ var removeIntroContent = function () {
 };
 
 var startTimer = function () {
-	timeLeft = 75;
+	timeLeft = 50;
 	var timeInterval = setInterval(function () {
 		if (timeLeft >= 1 && currentQuestion < questions.length) {
 			timeLeft--;
@@ -96,8 +88,7 @@ var buildQuestionList = function () {
 	for (i = 0; i < 4; i++) {
 		var answerItem = document.createElement("li");
 		answerItem.className = "button";
-		answerItem.textContent =
-			[i + 1] + ". " + questions[currentQuestion].answersList[i];
+		answerItem.textContent = [i + 1] + ". " + questions[currentQuestion].answersList[i];
 		answerItem.setAttribute("data-answer-index", i);
 
 		answeresContainerEl.appendChild(answerItem);
@@ -105,26 +96,18 @@ var buildQuestionList = function () {
 	return answeresContainerEl;
 };
 
-// TODO Refactor to remove duplicated lines
 var handleAnswer = function (event) {
 	oldAnsweres = document.getElementById("answer-container");
-	if (
-		parseInt(event.target.dataset.answerIndex) ===
-		questions[currentQuestion].correctAnswerIndex
-	) {
-		answerResultEl.setAttribute("style", "display: inline;");
+	if (parseInt(event.target.dataset.answerIndex) === questions[currentQuestion].correctAnswerIndex) {
 		answerResultEl.textContent = "Correct!";
-		contentEl.removeChild(oldAnsweres);
-		currentQuestion++;
-		getNextQuestion();
 	} else {
-		answerResultEl.setAttribute("style", "display: inline;");
 		answerResultEl.textContent = "Wrong!";
-		contentEl.removeChild(oldAnsweres);
 		addPenalty();
-		currentQuestion++;
-		getNextQuestion();
 	}
+	answerResultEl.setAttribute("style", "display: inline;");
+	contentEl.removeChild(oldAnsweres);
+	currentQuestion++;
+	getNextQuestion();
 };
 
 var finalScore = function () {
@@ -144,7 +127,7 @@ var endGame = function () {
 };
 
 var handleHighScoreInput = function (event) {
-	event.preventDefault()
+	event.preventDefault();
 	if (event.target.matches("#high-score-entry")) {
 		var newScore = {
 			initials: document.getElementById("player-initials").value,
@@ -160,7 +143,7 @@ var handleHighScoreInput = function (event) {
 		highScores.push(newScore);
 		localStorage.setItem("highScores", JSON.stringify(highScores));
 	}
-	window.location.href="./high-scores.html";
+	window.location.href = "./high-scores.html";
 };
 
 startButtonEl.addEventListener("click", handleQuizStart);

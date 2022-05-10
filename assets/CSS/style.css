@@ -129,10 +129,3 @@ ul {
 .button:hover {
     background-color: var(--highlight-color);
 }
-
-
-@media screen and (min-width: 714px) {}
-
-@media screen and (min-width: 959px) {}
-
-@media screen and (min-width: 1439px) {}
